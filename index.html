@@ -90,6 +90,7 @@
 		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 		<script>
+			$('.control-group :input').prop('disabled', false); // remove disabled state on load due to FF keeping that setting on soft refresh.
 			$(document)
 			    .on('keyup','#card-number',function () {
 			        var $val = $(this).val();
