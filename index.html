@@ -1,0 +1,124 @@
+<! DOCTYPE html>
+<html>
+<head>
+	<title>Square style credit card entry</title>
+	<link rel="stylesheet" href="normalize.css">
+	<style>
+		body {
+		    padding:1em;
+		    font-family: Arial, Helvetica, sans-serif;
+		}
+
+		.control-group {
+		    display:inline-block;
+		    padding:0;
+		    border: solid 1px gray;
+		    border-radius:.2em;
+		    position:relative;
+		    overflow:hidden;
+		    width:14em;
+		}
+
+		label {
+		    display:inline-block;;
+		    width:2em;
+		    background:white;
+		    position:relative;
+		    z-index:3;
+		    height:2em;
+		    padding:0 .5em;
+		    background:white url('https://dl.dropbox.com/u/471573/generic.png') no-repeat .5em 0;
+		}
+
+		input {
+		    padding:0;
+		    -webkit-box-sizing:border-box;
+		       -moz-box-sizing:border-box;
+		        -ms-box-sizing:border-box;
+		         -o-box-sizing:border-box;
+		    border:none;
+		    width:7.6em;
+		    display:block;
+		    position:absolute;
+		    z-index:2;
+		    left:3em;
+		    top:.55em;
+		    background:none;
+		}
+
+		#card-number {
+		    -webkit-transition:left 0.5s ease-in-out;
+		       -moz-transition:left 0.5s ease-in-out;
+		         -o-transition:left 0.5s ease-in-out;
+		}
+
+		#card-number.done {
+		    left:-2em;
+		}
+
+		#card-date, #card-cvv {
+		    width:3em;
+		    left:6em;
+		    z-index:1;
+		    -webkit-transition:opacity 0.5s ease-in-out;
+		       -moz-transition:opacity 0.5s ease-in-out;
+		         -o-transition:opacity 0.5s ease-in-out;
+		    opacity:0;
+		}
+
+		#card-date.open, #card-cvv.open {
+		    opacity:1;
+		}
+
+		#card-cvv {
+		    left:9.5em;
+		}
+
+		input:focus {
+		    -webkit-box-shadow:none;
+		    box-shadow:none;
+		    outline:transparent;
+		}
+	</style>
+</head>
+	<body>
+		<div class="control-group single-card">
+		    <label></label>
+		    <input type="text" id="card-number" placeholder="1234 5678 9012">
+		    <input type="text" id="card-date" placeholder="mm/yy">
+		    <input type="text" id="card-cvv" placeholder="cvv">
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script>
+			$(document)
+			    .on('keyup','#card-number',function () {
+			        var $val = $(this).val();
+			        var space = " ";
+
+			        if ($val.length === 4 || $val.length === 9) {
+			            var newval = $val + space;
+			            $(this).val( newval );           
+			        }
+
+			        if ($val.length === 14) {
+			            $(this).blur().addClass('done').prop('disabled',true);
+			            $('#card-date').addClass('open'); //.focus(); dont auto focus because firefox clears the placeholder.
+			        }
+			    })
+			    .on('keyup','#card-date',function () {
+			        var $val = $(this).val();
+			        var space = "/";
+
+			        if ($val.length === 2) {
+			            var newval = $val + space;
+			            $(this).val( newval );           
+			        }
+
+			        if ($val.length === 5) {
+			        	$(this).prop('disabled',true);
+			            $('#card-cvv').addClass('open'); //.focus(); dont auto focus because firefox clears the placeholder.
+			        }
+			    });
+		</script>
+	</body>
+</html>
